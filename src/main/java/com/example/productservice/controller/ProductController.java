@@ -8,6 +8,8 @@ import com.example.productservice.service.ProductService;
 import com.example.productservice.service.mapper.ProductMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,6 +42,13 @@ public class ProductController {
         productDto.add(linkTo(methodOn(ProductController.class).getById(productDto.getId())).withSelfRel());
         return productDto;
     }
+    @GetMapping
+    public Page<ProductDto> getById(Pageable pageable) {
+        Page<Product> products = productService.findAll(pageable);
+
+        return products.map(productMapper::toDto);
+    }
+
 
     @PostMapping
     @ResponseStatus(CREATED)

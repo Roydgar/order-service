@@ -6,7 +6,7 @@ import com.example.productservice.model.entity.Product;
 
 import java.util.UUID;
 
-public interface ProductService {
+public interface ProductService extends PageableProductService {
     Product findById(UUID id);
 
     Product create(CreateProductRequest createRequest);
