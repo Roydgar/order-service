@@ -1,0 +1,23 @@
+server:
+  port: 8095
+
+spring:
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+  datasource:
+    url: "jdbc:postgresql://localhost:5432/product?createDatabaseIfNotExist=true"
+    username: user
+    password: password
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - health
+          - beans
+          - env
+          - info
+          - metrics
+          - mappings

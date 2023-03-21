@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <property name="uuid_type" value="uuid" dbms="postgresql"/>
+
+    <changeSet id="20231021151524" author="roydgar">
+        <createTable tableName="product">
+            <column name="id" type="${uuid_type}">
+                <constraints nullable="false" unique="true" />
+            </column>
+
+            <column name="product_name" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="product_type" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="created_at" type="timestamp">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="updated_at" type="timestamp">
+                <constraints nullable="false" />
+            </column>
+            <column name="version" type="integer">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+
+    </changeSet>
+</databaseChangeLog>
