@@ -28,28 +28,43 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product findById(UUID id) {
-        return productRepository.findById(id)
+        log.debug("Looking for a product with id {}", id);
+
+        Product product = productRepository.findById(id)
                 .orElseThrow(() -> new ProductNotFoundException("Product with id " + id + "is not found"));
+
+        log.info("Retrieved a product with id {}", id);
+        return product;
     }
 
     @Override
     public Page<Product> findAll(Pageable pageable) {
-        return pageableProductRepository.findAll(pageable);
+        log.debug("Retrieving products. Page request: {}", pageable);
+
+        Page<Product> products = pageableProductRepository.findAll(pageable);
+
+        log.info("Retrieved {} products of {} total", products.getSize(), products.getTotalElements());
+        return products;
     }
 
     @Override
     public Product create(CreateProductRequest createRequest) {
+        log.debug("Creating a new product");
         Product product = productMapper.toProduct(createRequest);
 
         ZonedDateTime nowDateTime = dateTimeProvider.nowUTC();
         product.setCreatedAt(nowDateTime);
         product.setUpdatedAt(nowDateTime);
 
-        return productRepository.save(product);
+        Product createdProduct = productRepository.save(product);
+
+        log.info("Created a new product with id {}", createdProduct);
+        return createdProduct;
     }
 
     @Override
     public Product update(UpdateProductRequest updateRequest) {
+        log.debug("Updating a product with id {}", updateRequest.getId());
         ZonedDateTime nowDateTime = dateTimeProvider.nowUTC();
 
         Product product = findById(updateRequest.getId());
@@ -58,12 +73,18 @@ public class ProductServiceImpl implements ProductService {
         product.setProductType(updateRequest.getProductType());
         product.setUpdatedAt(nowDateTime);
 
-        return productRepository.save(product);
+        Product updatedProduct = productRepository.save(product);
+
+        log.info("Updated a product with id {}", updatedProduct.getId());
+        return updatedProduct;
     }
 
     @Override
     public void delete(UUID id) {
+        log.debug("Deleting product with id {}", id);
         Product product = findById(id);
+
         productRepository.delete(product);
+        log.info("Product with id {} is deleted", product.getId());
     }
 }
