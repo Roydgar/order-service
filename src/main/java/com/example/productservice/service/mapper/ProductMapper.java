@@ -2,7 +2,6 @@ package com.example.productservice.service.mapper;
 
 import com.example.productservice.model.dto.CreateProductRequest;
 import com.example.productservice.model.dto.ProductDto;
-import com.example.productservice.model.dto.UpdateProductRequest;
 import com.example.productservice.model.entity.Product;
 import org.springframework.stereotype.Component;
 
@@ -21,9 +20,6 @@ public class ProductMapper {
                 .id(product.getId())
                 .productName(product.getProductName())
                 .productType(product.getProductType())
-                .createdAt(product.getCreatedAt())
-                .updatedAt(product.getUpdatedAt())
-                .version(product.getVersion())
                 .build();
     }
 }
