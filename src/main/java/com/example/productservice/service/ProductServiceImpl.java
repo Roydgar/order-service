@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
@@ -55,6 +56,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Transactional
     public Product update(UpdateProductRequest updateRequest) {
         log.debug("Updating a product with id {}", updateRequest.getId());
         Product product = findById(updateRequest.getId());
@@ -69,6 +71,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Transactional
     public void delete(UUID id) {
         log.debug("Deleting product with id {}", id);
         Product product = findById(id);

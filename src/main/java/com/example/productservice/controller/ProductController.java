@@ -42,13 +42,13 @@ public class ProductController {
         productDto.add(linkTo(methodOn(ProductController.class).getById(productDto.getId())).withSelfRel());
         return productDto;
     }
+
     @GetMapping
-    public Page<ProductDto> getById(Pageable pageable) {
+    public Page<ProductDto> getProducts(Pageable pageable) {
         Page<Product> products = productService.findAll(pageable);
 
         return products.map(productMapper::toDto);
     }
-
 
     @PostMapping
     @ResponseStatus(CREATED)
